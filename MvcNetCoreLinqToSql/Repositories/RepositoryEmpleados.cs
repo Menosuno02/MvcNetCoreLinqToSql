@@ -68,14 +68,13 @@ namespace MvcNetCoreLinqToSql.Repositories
                            where datos.Field<string>("OFICIO") == oficio
                            && datos.Field<int>("SALARIO") >= salario
                            select datos;
-            List<Empleado> empleados = null;
+            List<Empleado> empleados = new List<Empleado>(); ;
             if (consulta.Count() == 0)
             {
                 return null;
             }
             else
             {
-                empleados = new List<Empleado>();
                 foreach (var row in consulta)
                 {
                     // Sintaxis para instanciar un objeto y
