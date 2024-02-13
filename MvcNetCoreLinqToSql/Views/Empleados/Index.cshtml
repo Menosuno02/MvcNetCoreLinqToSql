@@ -2,10 +2,18 @@
 
 <h1>Empleados LINQ</h1>
 
-<a asp-controller="Empleados" asp-action="BuscadorEmpleados"
-   class="btn btn-success mt-3">
-    Buscador empleados
-</a>
+
+<div class="row">
+    <a asp-controller="Empleados" asp-action="BuscadorEmpleados"
+       class="btn btn-success mt-3">
+        Buscador empleados
+    </a>
+    <a asp-controller="Empleados" asp-action="DatosEmpleados"
+       class="btn btn-success mt-3">
+        Empleados por oficio
+    </a>
+</div>
+
 <ul class="list-group mt-3">
     @foreach (Empleado emp in Model)
     {

@@ -1,6 +1,7 @@
 ﻿using MvcNetCoreLinqToSql.Models;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection.Metadata.Ecma335;
 
 namespace MvcNetCoreLinqToSql.Repositories
 {
@@ -91,6 +92,40 @@ namespace MvcNetCoreLinqToSql.Repositories
                 }
                 return empleados;
             }
+        }
+
+        // Filtrar empleados por oficio
+        public ResumenEmpleados GetEmpleadosOficio(string oficio)
+        {
+            var consulta = from datos in tablaEmpleados.AsEnumerable()
+                           where datos.Field<string>("OFICIO") == oficio
+                           select datos;
+            consulta = consulta.OrderBy(enfermo => enfermo.Field<int>("SALARIO"));
+            int personas = consulta.Count();
+            int maximo = consulta.Max(z => z.Field<int>("SALARIO"));
+            double media = consulta.Average(x => x.Field<int>("SALARIO"));
+            List<Empleado> empleados = new List<Empleado>();
+            foreach (var row in consulta)
+            {
+                Empleado emple = new Empleado
+                {
+                    IdEmpleado = row.Field<int>("EMP_NO"),
+                    Apellido = row.Field<string>("APELLIDO"),
+                    Oficio = row.Field<string>("OFICIO"),
+                    Salario = row.Field<int>("SALARIO"),
+                    IdDepartamento = row.Field<int>("DEPT_NO"),
+
+                };
+                empleados.Add(emple);
+            }
+            ResumenEmpleados resumen = new ResumenEmpleados
+            {
+                MediaSalarial = media,
+                MaximoSalario = maximo,
+                Personas = personas,
+                Empleados = empleados
+            };
+            return resumen;
         }
     }
 }

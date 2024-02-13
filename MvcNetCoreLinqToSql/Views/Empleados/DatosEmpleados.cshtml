@@ -1,0 +1,39 @@
+﻿@model ResumenEmpleados
+
+<h1>Lambda Empleados Oficio</h1>
+
+<form class="mt-3" method="post">
+    <label class="form-label">Introduzca un oficio</label>
+    <input type="text" name="oficio" class="form-control" />
+    <button class="btn btn-outline-success mt-3">
+        Mostrar resumen
+    </button>
+</form>
+
+@if (Model != null)
+{
+    <ul class="list-group mt-3">
+        <li class="list-group-item">Personas: @Model.Personas</li>
+        <li class="list-group-item">Maximo salario: @Model.MaximoSalario</li>
+        <li class="list-group-item">Media salarial: @Model.MediaSalarial</li>
+    </ul>
+    <table class="table table-borderless mt-3">
+        <tr>
+            <th>Apellido</th>
+            <th>Oficio</th>
+            <th>Salario</th>
+        </tr>
+
+
+        <tbody>
+            @foreach (Empleado emp in Model.Empleados)
+            {
+                <tr>
+                    <td>@emp.Apellido</td>
+                    <td>@emp.Oficio</td>
+                    <td>@emp.Salario</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
