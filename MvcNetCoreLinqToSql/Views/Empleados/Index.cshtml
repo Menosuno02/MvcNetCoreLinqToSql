@@ -1,21 +1,20 @@
 ﻿@model List<Empleado>
 
 <h1>Empleados LINQ</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Apellido</th>
-            <th>Oficio</th>
-            <th>Salario</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Empleado emple in Model)
-        {
-            <tr>
-                <td>@emple.Apellido</td>
-                <td>@emple.Oficio</td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<a asp-controller="Empleados" asp-action="BuscadorEmpleados"
+   class="btn btn-success mt-3">
+    Buscador empleados
+</a>
+<ul class="list-group mt-3">
+    @foreach (Empleado emp in Model)
+    {
+        <li class="list-group-item">
+            @emp.Apellido - @emp.Oficio
+            <a asp-controller="Empleados" asp-action="Details"
+               asp-route-id="@emp.IdEmpleado" class="btn btn-sm btn-primary ms-4">
+                Details
+            </a>
+        </li>
+    }
+</ul>

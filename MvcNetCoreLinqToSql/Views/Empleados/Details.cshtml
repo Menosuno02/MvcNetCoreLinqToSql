@@ -1,5 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Empleado
+
+<h1>Details</h1>
+
+<p>
+    <a asp-controller="Empleados" asp-action="Index">Back to Index</a>
+</p>
+
+<ul class="list-group">
+    <li class="list-group-item">Apellido: @Model.Apellido</li>
+    <li class="list-group-item">Oficio: @Model.Oficio</li>
+    <li class="list-group-item">Salario: @Model.Salario</li>
+</ul>

@@ -10,9 +10,9 @@ namespace MvcNetCoreLinqToSql.Repositories
 
         public RepositoryEmpleados()
         {
-            string connectionString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=HOSPITAL;User ID=sa;Password=MSCD2023;Encrypt=False";
+            string connectionString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=HOSPITAL;Persist Security Info=True;User ID=sa;Password=MCSD2023;Encrypt=False";
             string sql = "SELECT * FROM EMP";
-            SqlDataAdapter adapter = new SqlDataAdapter(connectionString, sql);
+            SqlDataAdapter adapter = new SqlDataAdapter(sql, connectionString);
             this.tablaEmpleados = new DataTable();
             adapter.Fill(tablaEmpleados);
         }
@@ -60,6 +60,38 @@ namespace MvcNetCoreLinqToSql.Repositories
             empleado.Oficio = row.Field<string>("OFICIO");
             empleado.Salario = row.Field<int>("SALARIO");
             return empleado;
+        }
+
+        public List<Empleado> GetEmpleadosOficioSalario(string oficio, int salario)
+        {
+            var consulta = from datos in this.tablaEmpleados.AsEnumerable()
+                           where datos.Field<string>("OFICIO") == oficio
+                           && datos.Field<int>("SALARIO") >= salario
+                           select datos;
+            List<Empleado> empleados = null;
+            if (consulta.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                empleados = new List<Empleado>();
+                foreach (var row in consulta)
+                {
+                    // Sintaxis para instanciar un objeto y
+                    // rellenar sus propiedades a la vez
+                    Empleado empleado = new Empleado
+                    {
+                        IdEmpleado = row.Field<int>("EMP_NO"),
+                        Apellido = row.Field<string>("APELLIDO"),
+                        Oficio = row.Field<string>("OFICIO"),
+                        Salario = row.Field<int>("SALARIO"),
+                        IdDepartamento = row.Field<int>("DEPT_NO")
+                    };
+                    empleados.Add(empleado);
+                }
+                return empleados;
+            }
         }
     }
 }
