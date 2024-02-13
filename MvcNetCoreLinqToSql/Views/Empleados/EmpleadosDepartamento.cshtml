@@ -1,0 +1,52 @@
+﻿@model ResumenEmpleados
+@*adsa*@
+@{
+    // List<int> departamentos = ViewData["DEPT"] as List<int>;
+    List<Departamento> departamentos = ViewData["DEPT"] as List<Departamento>;
+}
+
+<h1>Empleados por departamento</h1>
+
+<form method="post">
+    <label class="form-label">Departamento</label>
+    <select class="form-select" name="dept_no">
+        @*
+        @foreach (int depart in departamentos)
+        {
+        <option value="@depart">@depart</option>
+        }
+        *@
+        @foreach (Departamento depart in departamentos)
+        {
+            <option value="@depart.DeptNo">@depart.DeptNombre</option>
+        }
+    </select>
+    <button class="btn btn-outline-info mt-3">Buscar</button>
+</form>
+
+<h3 class="text-center mx-auto w-75 mt-3" style="color:red">@ViewData["MENSAJE"]</h3>
+
+@if (Model != null)
+{
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>Apellido</th>
+                <th>Num dept</th>
+                <th>Oficio</th>
+                <th>Salario</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Empleado emple in Model.Empleados)
+            {
+                <tr>
+                    <td>@emple.Apellido</td>
+                    <td>@emple.IdDepartamento</td>
+                    <td>@emple.Oficio</td>
+                    <td>@emple.Salario</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

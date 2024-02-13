@@ -1,10 +1,19 @@
 ﻿@model ResumenEmpleados
 
+@{
+    List<string> oficios = ViewData["OFICIOS"] as List<string>;
+}
+
 <h1>Lambda Empleados Oficio</h1>
 
 <form class="mt-3" method="post">
     <label class="form-label">Introduzca un oficio</label>
-    <input type="text" name="oficio" class="form-control" />
+    <select name="oficio" class="form-select">
+        @foreach (string oficio in oficios)
+        {
+            <option value="@oficio">@oficio</option>
+        }
+    </select>
     <button class="btn btn-outline-success mt-3">
         Mostrar resumen
     </button>
@@ -13,9 +22,15 @@
 @if (Model != null)
 {
     <ul class="list-group mt-3">
-        <li class="list-group-item">Personas: @Model.Personas</li>
-        <li class="list-group-item">Maximo salario: @Model.MaximoSalario</li>
-        <li class="list-group-item">Media salarial: @Model.MediaSalarial</li>
+        <li class="list-group-item">
+            <span class="fw-bold">Personas:</span> @Model.Personas
+        </li>
+        <li class="list-group-item">
+            <span class="fw-bold">Máximo:</span> @Model.MaximoSalario
+        </li>
+        <li class="list-group-item">
+            <span class="fw-bold">Media:</span> @Model.MediaSalarial
+        </li>
     </ul>
     <table class="table table-borderless mt-3">
         <tr>

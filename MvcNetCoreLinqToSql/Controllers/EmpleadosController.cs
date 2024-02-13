@@ -45,13 +45,34 @@ namespace MvcNetCoreLinqToSql.Controllers
 
         public IActionResult DatosEmpleados()
         {
+            ViewData["OFICIOS"] = this.repo.GetOficios();
             return View();
         }
 
         [HttpPost]
         public IActionResult DatosEmpleados(string oficio)
         {
+            ViewData["OFICIOS"] = this.repo.GetOficios();
             ResumenEmpleados resumen = this.repo.GetEmpleadosOficio(oficio);
+            return View(resumen);
+        }
+
+        public IActionResult EmpleadosDepartamento()
+        {
+            ViewData["DEPT"] = this.repo.GetDepartamentos();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult EmpleadosDepartamento(int dept_no)
+        {
+            ViewData["DEPT"] = this.repo.GetDepartamentos();
+            ResumenEmpleados resumen = this.repo.GetEmpleadosDept(dept_no);
+            if (resumen == null)
+            {
+                ViewData["MENSAJE"] = "No se encontraron empleados del departamento " + dept_no;
+                return View();
+            }
             return View(resumen);
         }
     }
